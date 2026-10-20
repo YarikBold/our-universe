@@ -35,6 +35,10 @@ npm run preview
 - Output directory: `dist`
 - Framework preset: Vite (или None)
 
+### GitHub Pages
+
+Публикация настроена через `.github/workflows/deploy.yml`. После push в `main` GitHub Actions выполняет `npm ci`, `npm run build` и публикует `dist`. В настройках репозитория откройте **Settings → Pages** и выберите **GitHub Actions** как Source.
+
 ### Папки для личных файлов
 
 В репозитории оставлены `public/images/` и `public/images/memories/` для фотографий, а также `public/audio/` для музыки. Добавьте туда свои файлы и обновите пути в `src/data/loveStory.ts` при необходимости.

@@ -5,13 +5,15 @@ export type Memory = {
   image?: string
 }
 
+const assetBase = import.meta.env.BASE_URL
+
 export const loveStory = {
   siteTitle: 'Наша маленькая вселенная',
   startDate: '2025-11-20T20:11:00+03:00',
   girlfriendName: 'Котик',
   boyfriendName: 'Любимый',
-  couplePhoto: '/images/us.jpg',
-  musicPath: '/audio/our-song.mp3',
+  couplePhoto: `${assetBase}images/us.jpg`,
+  musicPath: `${assetBase}audio/our-song.mp3`,
   chapters: {
     storyTitle: 'У каждой истории есть начало. У нашей — 20 ноября 2025 года.',
     storySubtitle: 'Есть моменты, которые не хочется отпускать. Я собрал для тебя несколько маленьких страниц нашей большой истории.',
