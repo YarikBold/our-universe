@@ -1,0 +1,49 @@
+/* Nocturne motion system: one shared rhythm for every chapter. Only opacity
+   and transforms animate, keeping the experience smooth on mobile Safari. */
+
+:root {
+  --motion-ease-enter: cubic-bezier(.16, 1, .3, 1);
+  --motion-ease-soft: cubic-bezier(.22, .8, .24, 1);
+  --motion-ease-exit: cubic-bezier(.7, 0, .84, 0);
+  --motion-glow: rgba(242, 198, 166, .34);
+}
+
+@keyframes motion-fade-up { from { opacity: 0; transform: translate3d(0, 1.4rem, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+@keyframes motion-reveal-up { from { opacity: 0; transform: translate3d(0, 100%, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+@keyframes motion-soft-scale { from { opacity: 0; transform: scale(.93) translate3d(0, .8rem, 0); } to { opacity: 1; transform: scale(1) translate3d(0, 0, 0); } }
+@keyframes motion-scene-wash { 0% { opacity: 0; transform: scale(1.035); } 18%, 82% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.985); } }
+@keyframes motion-scene-wipe { from { clip-path: inset(0 100% 0 0); opacity: .3; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+@keyframes motion-camera-drift { 0%, 100% { transform: translate3d(-.4%, .25%, 0) scale(1.03); } 50% { transform: translate3d(.45%, -.35%, 0) scale(1.06); } }
+@keyframes motion-fall-heart { 0% { opacity: 0; transform: translate3d(0, -12vh, 0) rotate(-12deg) scale(.72); } 10% { opacity: var(--heart-opacity); } 88% { opacity: calc(var(--heart-opacity) * .85); } 100% { opacity: 0; transform: translate3d(var(--heart-drift), 112vh, 0) rotate(18deg) scale(1.04); } }
+@keyframes motion-heart-sway { 0%, 100% { margin-left: -4px; } 50% { margin-left: 4px; } }
+@keyframes motion-twinkle { 0%, 100% { opacity: .25; transform: scale(.76); } 50% { opacity: 1; transform: scale(1.18); } }
+@keyframes motion-pulse-glow { 0%, 100% { box-shadow: 0 0 0 rgba(243, 167, 212, 0); } 50% { box-shadow: 0 0 2.2rem var(--motion-glow); } }
+@keyframes motion-petal-fall { 0% { opacity: 0; transform: translate3d(0, -12vh, 0) rotate(0deg) scale(.7); } 12% { opacity: .72; } 84% { opacity: .54; } 100% { opacity: 0; transform: translate3d(var(--petal-drift), 110vh, 0) rotate(var(--petal-rotate)) scale(1.15); } }
+@keyframes motion-breathe { 0%, 100% { opacity: .62; transform: scale(.985); } 50% { opacity: 1; transform: scale(1.02); } }
+
+.motion-primitive { --motion-delay: 0s; --motion-duration: .85s; animation-delay: var(--motion-delay); animation-duration: var(--motion-duration); animation-fill-mode: both; animation-timing-function: var(--motion-ease-enter); will-change: opacity, transform; }
+.motion-fade-in { animation-name: motion-fade-up; }
+.motion-reveal { overflow: hidden; clip-path: inset(0 0 0 0); }
+.motion-reveal__content { animation: motion-reveal-up var(--motion-duration) var(--motion-delay) both var(--motion-ease-enter); will-change: opacity, transform; }
+.motion-scale-in { animation-name: motion-soft-scale; }
+.motion-stagger > .motion-stagger-item, .motion-stagger > * { animation: motion-fade-up var(--motion-duration) calc(var(--motion-delay) + var(--motion-item-delay) * var(--motion-stagger-index, 0)) both var(--motion-ease-enter); }
+.motion-stagger > :nth-child(1) { --motion-stagger-index: 0; } .motion-stagger > :nth-child(2) { --motion-stagger-index: 1; } .motion-stagger > :nth-child(3) { --motion-stagger-index: 2; } .motion-stagger > :nth-child(4) { --motion-stagger-index: 3; } .motion-stagger > :nth-child(5) { --motion-stagger-index: 4; } .motion-stagger > :nth-child(6) { --motion-stagger-index: 5; }
+.motion-scene-wash { animation-name: motion-scene-wash; }
+.motion-scene-wipe { animation-name: motion-scene-wipe; }
+.motion-camera-drift { animation: motion-camera-drift var(--motion-duration) var(--motion-delay) both ease-in-out; will-change: transform; }
+.motion-parallax-layer { --parallax-depth: 1; transform: translate3d(calc(var(--parallax-depth) * -1%), calc(var(--parallax-depth) * .35%), 0); will-change: transform; }
+.motion-breathe { animation: motion-breathe 7s ease-in-out infinite; }
+
+.falling-hearts { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; contain: strict; }
+.falling-heart { position: absolute; top: 0; left: var(--heart-left); display: block; color: var(--heart-color); font-size: var(--heart-size); line-height: 1; opacity: 0; text-shadow: 0 0 12px color-mix(in srgb, var(--heart-color) 60%, transparent); animation: motion-fall-heart var(--heart-duration) var(--heart-delay) infinite ease-in; will-change: opacity, transform; }
+.falling-heart::after { content: ''; position: absolute; inset: 10%; border-radius: 50%; animation: motion-heart-sway 3.2s ease-in-out infinite; }
+.motion-twinkle { animation: motion-twinkle 3.4s ease-in-out infinite; will-change: opacity, transform; }
+.motion-pulse-glow { animation: motion-pulse-glow 3.6s ease-in-out infinite; }
+.motion-petal-field { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; contain: strict; }
+.motion-petal-field span { position: absolute; top: 0; left: var(--petal-left); color: rgba(255, 215, 210, .72); font-size: .72rem; opacity: 0; text-shadow: 0 0 .7rem rgba(255, 180, 191, .55); animation: motion-petal-fall var(--petal-duration) var(--petal-delay) infinite ease-in; will-change: opacity, transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-primitive, .motion-reveal__content, .motion-stagger > .motion-stagger-item, .motion-stagger > *, .falling-heart, .falling-heart::after, .motion-twinkle, .motion-pulse-glow, .motion-camera-drift, .motion-breathe, .motion-petal-field span { animation-duration: .01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transform: none !important; }
+  .falling-hearts { display: none; }
+}
+@media (max-width: 640px) { .falling-heart { text-shadow: none; } .motion-petal-field span { font-size: .58rem; } }
