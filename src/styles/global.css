@@ -161,20 +161,50 @@ button { touch-action: manipulation; }
 .reasons-deck__eyebrow { color: rgba(255,233,197,.72); font: .62rem 'DM Mono', monospace; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
 .reasons-deck__line { display: block; width: 5.8rem; height: .24rem; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.15); }
 .reasons-deck__line i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--candle), var(--orchid-bright)); box-shadow: 0 0 .8rem rgba(255,233,197,.45); transition: width .6s var(--ease-film); }
-.reasons-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .85rem; max-width: 58rem; margin: 0 auto; }
-.reason-card { position: relative; min-height: 7.8rem; overflow: hidden; padding: 1.15rem 1rem 1rem; border: 1px solid rgba(255,233,197,.28); border-radius: .85rem .35rem .85rem .35rem; color: var(--paper); background: linear-gradient(145deg, rgba(255,244,225,.14), rgba(255,255,255,.035)); box-shadow: 0 .9rem 1.8rem rgba(4,2,14,.2), inset 0 1px rgba(255,255,255,.16); font: 1.04rem/1.3 'Playfair Display', serif; text-align: left; animation: reason-card-pull .7s calc(var(--i) * 35ms) var(--ease-film) both; }
-.reason-card::before { content: ''; position: absolute; left: -2rem; top: -2.5rem; width: 6rem; height: 6rem; border-radius: 50%; background: rgba(255,220,190,.1); filter: blur(1rem); }
-.reason-card__number { position: relative; display: block; color: rgba(255,233,197,.64); font: .62rem 'DM Mono', monospace; letter-spacing: .18em; }
-.reason-card__ornament { position: absolute; right: .9rem; top: .6rem; color: var(--orchid-bright); font: 1.3rem 'Playfair Display', serif; text-shadow: 0 0 .8rem rgba(243,195,217,.6); }
-.reason-card p { position: relative; margin: .7rem 0 0; }
-.card-draw-button { margin-top: 1.25rem; border-color: rgba(255,233,197,.55); color: var(--paper); background: rgba(255,255,255,.09); box-shadow: 0 .75rem 1.6rem rgba(4,2,14,.24), inset 0 1px rgba(255,255,255,.16); }
-.card-draw-button:hover { border-color: var(--candle-hot); color: var(--candle-hot); background: rgba(255,233,197,.13); box-shadow: 0 .9rem 1.8rem rgba(4,2,14,.28), 0 0 1.2rem rgba(255,207,167,.12); }
+.reason-card-stage { display: grid; place-items: center; min-height: 14.5rem; perspective: 1100px; }
+.reason-card { position: relative; width: min(100%, 25rem); min-height: 13.5rem; border-radius: .9rem .35rem .9rem .35rem; color: var(--paper); text-align: left; animation: reason-card-pull .85s var(--ease-film) both; }
+.reason-card__inner { position: absolute; inset: 0; transform-style: preserve-3d; animation: reason-card-flip .9s .18s var(--ease-film) both; }
+.reason-card__back, .reason-card__face { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; padding: 1.6rem 1.5rem; border: 1px solid rgba(255,233,197,.38); border-radius: inherit; backface-visibility: hidden; }
+.reason-card__back { color: rgba(255,233,197,.85); background: linear-gradient(145deg, #a95e83, #4d2b54); box-shadow: 0 1.2rem 2.6rem rgba(4,2,14,.3), inset 0 1px rgba(255,255,255,.22); }
+.reason-card__back span { margin-bottom: .5rem; color: var(--candle-hot); font-size: 2.3rem; text-shadow: 0 0 1rem rgba(255,233,197,.55); }
+.reason-card__back small { font: .66rem 'DM Mono', monospace; letter-spacing: .17em; text-transform: uppercase; }
+.reason-card__face { align-items: stretch; transform: rotateY(180deg); background: radial-gradient(circle at 83% 10%, rgba(255,220,190,.17), transparent 25%), linear-gradient(145deg, rgba(255,244,225,.17), rgba(255,255,255,.045)); box-shadow: 0 1.2rem 2.6rem rgba(4,2,14,.28), inset 0 1px rgba(255,255,255,.18); }
+.reason-card__face::before { content: ''; position: absolute; inset: .7rem; border: 1px solid rgba(255,233,197,.12); border-radius: .55rem .2rem .55rem .2rem; pointer-events: none; }
+.reason-card__number { position: relative; color: rgba(255,233,197,.68); font: .62rem 'DM Mono', monospace; letter-spacing: .18em; }
+.reason-card__ornament { position: absolute; right: 1.3rem; top: .95rem; color: var(--orchid-bright); font: 1.3rem 'Playfair Display', serif; text-shadow: 0 0 .8rem rgba(243,195,217,.6); }
+.reason-card__face p { position: relative; margin: 1rem 0 0; font: 1.34rem/1.35 'Playfair Display', serif; }
+.reason-card--special { width: min(100%, 27rem); min-height: 15.8rem; animation: reason-card-final-pull 1.45s var(--ease-film) both; }
+.reason-card--special .reason-card__face { border-color: rgba(243,214,176,.9); background: radial-gradient(circle at 50% 0%, rgba(255,233,197,.32), transparent 35%), linear-gradient(145deg, #fff4dc, #f2d9c8 58%, #e5c4c4); color: #593b4b; box-shadow: 0 0 0 .18rem rgba(243,214,176,.2), 0 0 2.6rem rgba(255,213,169,.26), 0 1.5rem 3rem rgba(4,2,14,.3); }
+.reason-card--special .reason-card__face::after { content: '✦  ·  ✦'; position: absolute; right: 1.3rem; bottom: .8rem; color: #b77b58; font-size: .7rem; letter-spacing: .2em; }
+.reason-card--special .reason-card__number, .reason-card--special .reason-card__ornament { color: #aa744f; }
+.reason-card--special .reason-card__face p { color: #5d4050; }
+.special-card__intro { animation: special-copy-in .9s var(--ease-film) both; }
+.special-card__reveal { margin-top: .85rem !important; color: #8b526c !important; font-style: italic; animation: special-copy-in 1.1s .35s var(--ease-film) both; }
+.special-card__heart { position: absolute; z-index: 3; left: 50%; top: -2.2rem; color: #ffe4ae; font-size: 1.55rem; text-shadow: 0 0 1rem rgba(255,216,144,.85); transform: translateX(-50%); animation: special-heart-hover 2.8s ease-in-out infinite; }
+.card-draw-button, .special-read-button { margin-top: 1.25rem; border-color: rgba(255,233,197,.55); color: var(--paper); background: rgba(255,255,255,.09); box-shadow: 0 .75rem 1.6rem rgba(4,2,14,.24), inset 0 1px rgba(255,255,255,.16); }
+.card-draw-button:hover, .special-read-button:hover { border-color: var(--candle-hot); color: var(--candle-hot); background: rgba(255,233,197,.13); box-shadow: 0 .9rem 1.8rem rgba(4,2,14,.28), 0 0 1.2rem rgba(255,207,167,.12); }
+.special-read-button { color: #3d263a; border-color: rgba(243,214,176,.85); background: linear-gradient(135deg, #ffe9c5, #e8a4ba); }
+.special-finale-cta { margin: 1.6rem auto 0; animation: special-copy-in 1s var(--ease-film) both; }
+.special-finale-cta p { margin: 0 0 .9rem; color: var(--candle-hot); font: italic 1.35rem 'Playfair Display', serif; }
+.special-finale-cta .romantic-button { border-color: rgba(255,233,197,.72); color: #29182d; background: linear-gradient(135deg, #ffe9c5, #e8a4ba); box-shadow: 0 .9rem 2rem rgba(7,3,17,.36), 0 0 1.4rem rgba(255,207,167,.16), inset 0 1px rgba(255,255,255,.75); font-weight: 600; }
+.special-finale-cta .romantic-button { max-width: 100%; font-size: .94rem; }
+.gift-scene--final-card .gift-stage__halo { opacity: 1; animation-duration: 3.2s; filter: blur(1px); }
+.gift-scene--final-card .gift-box-wrap { animation: gift-final-box-glow 2.7s ease-in-out infinite; }
+.gift-scene.is-leaving .gift-inner { animation: gift-scene-exit .9s var(--ease-film) both; }
+.gift-scene.is-leaving::after { animation: gift-scene-light .9s var(--ease-film) both; }
 .reasons-note { margin: 1.5rem 0 .2rem; color: var(--orchid-bright); font: italic 1.35rem 'Playfair Display', serif; }
 @keyframes gift-aura-breathe { 0%, 100% { opacity: .72; transform: translateX(-50%) scale(.96); } 50% { opacity: 1; transform: translateX(-50%) scale(1.05); } }
 @keyframes gift-sparkle-float { 0%, 100% { opacity: .45; transform: translateY(.25rem) scale(.85); } 50% { opacity: 1; transform: translateY(-.45rem) scale(1.12); } }
 @keyframes gift-box-settle { 0% { transform: translateX(-50%) translateY(.5rem); } 45% { transform: translateX(-50%) translateY(-.25rem); } 100% { transform: translateX(-50%); } }
 @keyframes gift-heart-burst { 0% { opacity: 0; transform: translate(-50%, 1rem) scale(.4); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(-50% + var(--burst-x)), var(--burst-y)) scale(1); } }
-@keyframes reason-card-pull { from { opacity: 0; transform: translateY(2.5rem) rotate(3deg) scale(.82); } to { opacity: 1; transform: translateY(0) rotate(0) scale(1); } }
+@keyframes reason-card-pull { from { opacity: 0; transform: translateY(5rem) rotate(4deg) scale(.72); } to { opacity: 1; transform: translateY(0) rotate(0) scale(1); } }
+@keyframes reason-card-final-pull { from { opacity: 0; transform: translateY(8rem) rotate(-3deg) scale(.72); } 65% { opacity: 1; transform: translateY(-.5rem) rotate(1deg) scale(1.02); } to { opacity: 1; transform: translateY(0) rotate(0) scale(1); } }
+@keyframes reason-card-flip { from { transform: rotateY(0deg) translateZ(0); } to { transform: rotateY(180deg) translateZ(0); } }
+@keyframes special-copy-in { from { opacity: 0; transform: translateY(.5rem); } to { opacity: 1; transform: translateY(0); } }
+@keyframes special-heart-hover { 0%, 100% { transform: translate(-50%, .2rem) scale(.9); } 50% { transform: translate(-50%, -.45rem) scale(1.08); } }
+@keyframes gift-final-box-glow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(255,215,160,0)); } 50% { filter: drop-shadow(0 0 1rem rgba(255,215,160,.45)); } }
+@keyframes gift-scene-exit { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(1.06); } }
+@keyframes gift-scene-light { from { opacity: 0; transform: translateX(-50%) scale(.7); } 50% { opacity: 1; } to { opacity: 0; transform: translateX(-50%) scale(1.45); } }
 
 /* Chapter V: dusk and sakura */
 .finale-scene { display: flex; align-items: flex-end; padding: 8rem 1rem 5rem; background: linear-gradient(180deg, #080a18 0%, #10192b 45%, #4b3c4d 74%, #bf8794 100%); }
@@ -244,8 +274,14 @@ button { touch-action: manipulation; }
   .gift-open-button { width: min(100%, 20rem); }
   .reasons-deck { width: min(100%, 21rem); }
   .reasons-deck__header { justify-content: space-between; }
-  .reasons-grid { grid-template-columns: 1fr; gap: .65rem; }
-  .reason-card { min-height: 6.4rem; padding: .95rem .9rem; font-size: 1rem; }
+  .reason-card-stage { min-height: 13.5rem; }
+  .reason-card, .reason-card--special { width: min(100%, 20.5rem); min-height: 12.6rem; }
+  .reason-card__face, .reason-card__back { padding: 1.35rem 1.15rem; }
+  .reason-card__face p { font-size: 1.18rem; }
+  .reason-card--special { min-height: 14.4rem; }
+  .reason-card--special .reason-card__face p { font-size: 1.1rem; }
+  .special-card__heart { top: -1.8rem; }
+  .special-finale-cta .romantic-button { width: min(100%, 22rem); padding-inline: .72rem; font-size: .82rem; }
   .card-draw-button { width: 100%; }
   .sakura-branch { right: -42%; bottom: 19%; opacity: .62; }
   .finale-line { min-height: 9rem; font-size: clamp(2rem, 9vw, 3.3rem); }

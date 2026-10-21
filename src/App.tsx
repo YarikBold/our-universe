@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Heart } from 'lucide-react'
 import { CinematicFinale } from './chapters/CinematicFinale'
-import { GiftBox } from './chapters/GiftBox'
+import { GiftBox, GIFT_PROGRESS_STORAGE_KEY } from './chapters/GiftBox'
 import HeartGame from './chapters/HeartGame'
 import { OurStory } from './chapters/OurStory'
 import { Universe } from './chapters/Universe'
@@ -27,7 +27,7 @@ export default function App() {
 
   useEffect(() => { localStorage.setItem('our-universe:chapter', String(chapter)); window.scrollTo({ top: 0, behavior: 'smooth' }) }, [chapter])
   const advance = (next: number) => setChapter((current) => Math.max(current, Math.min(5, next)))
-  const restart = () => { if (window.confirm('Начать нашу историю заново? Прогресс и найденные сердечки будут сброшены.')) { localStorage.removeItem('our-universe:chapter'); localStorage.removeItem('our-universe:heart-game'); localStorage.removeItem('our-universe:secret'); setChapter(1); setSecretUnlocked(false); setGameFound(0) } }
+  const restart = () => { if (window.confirm('Начать нашу историю заново? Прогресс и найденные сердечки будут сброшены.')) { localStorage.removeItem('our-universe:chapter'); localStorage.removeItem('our-universe:heart-game'); localStorage.removeItem('our-universe:secret'); localStorage.removeItem(GIFT_PROGRESS_STORAGE_KEY); setChapter(1); setSecretUnlocked(false); setGameFound(0) } }
   const openSecret = () => { setSecretOpen(true) }
   return <main className="app-shell">
     <a className="skip-link" href="#main-content">Перейти к содержимому</a>
