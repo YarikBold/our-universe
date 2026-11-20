@@ -8,10 +8,9 @@ type LoveLetterModalProps = {
   body: string
   onClose: () => void
   onRead: () => void
-  readHint?: string
 }
 
-export function LoveLetterModal({ open, title, body, onClose, onRead, readHint }: LoveLetterModalProps) {
+export function LoveLetterModal({ open, title, body, onClose, onRead }: LoveLetterModalProps) {
   const id = useId()
 
   useEffect(() => {
@@ -42,11 +41,9 @@ export function LoveLetterModal({ open, title, body, onClose, onRead, readHint }
             <div className="letter-body">
               {body.split('\n').map((line, index) => <p key={index}>{line || '\u00A0'}</p>)}
             </div>
-            {readHint && <p id={`${id}-hint`} className="letter-music-hint">{readHint}</p>}
             <button
               type="button"
               className="primary-button"
-              aria-describedby={readHint ? `${id}-hint` : undefined}
               onClick={() => { onRead(); onClose() }}
             >
               Обнимаю тебя ♡

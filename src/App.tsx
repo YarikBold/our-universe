@@ -29,7 +29,6 @@ export default function App() {
   const restart = () => { if (window.confirm('Начать нашу историю заново? Прогресс и найденные сердечки будут сброшены.')) { localStorage.removeItem('our-universe:chapter'); localStorage.removeItem('our-universe:heart-game'); localStorage.removeItem('our-universe:secret'); localStorage.removeItem(GIFT_PROGRESS_STORAGE_KEY); setChapter(1); setSecretUnlocked(false); setGameFound(0) } }
   const openSecret = () => { setSecretOpen(true) }
   const finishLetter = () => {
-    setMusicActive(false)
     setSecretUnlocked(true)
     try { localStorage.setItem('our-universe:secret', 'true') } catch { /* The secret is still available in this session. */ }
   }
@@ -45,7 +44,7 @@ export default function App() {
       {chapter === 2 && <OurStory onNext={() => advance(3)} />}
       {chapter === 3 && <section className="universe-scene"><div className="scene-inner"><HeartGame messages={loveStory.gameMessages} initialFound={gameFound} onProgress={setGameFound} onComplete={() => advance(4)} /></div></section>}
       {chapter === 4 && <GiftBox onNext={() => advance(5)} />}
-      {chapter === 5 && <CinematicFinale onLetterRead={finishLetter} />}
+      {chapter === 5 && <CinematicFinale onEpilogueStart={() => setMusicActive(false)} onLetterRead={finishLetter} />}
     </div>
     <footer className="app-footer"><button className="reset-button" onClick={restart}><Heart size={13}/> Пройти нашу историю заново</button></footer>
     <LoveLetterModal open={secretOpen} title={secretUnlocked ? loveStory.secret.title : 'Маленький секрет'} body={secretUnlocked ? loveStory.secret.body : loveStory.secret.teaser} onClose={() => setSecretOpen(false)} onRead={() => undefined} />

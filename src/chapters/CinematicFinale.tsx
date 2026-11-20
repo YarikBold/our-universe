@@ -3,14 +3,15 @@ import { Mail } from 'lucide-react'
 import { CoupleAvatar } from '../components/CoupleAvatar'
 import { FallingHearts } from '../components/FallingHearts'
 import { FinaleEpilogue } from '../components/FinaleEpilogue'
-import { LoveLetterModal } from '../components/LoveLetterModal'
 import { PetalField, SceneWipe } from '../components/MotionPrimitives'
 import { loveStory } from '../data/loveStory'
 
-export function CinematicFinale({ onLetterRead }: { onLetterRead: () => void }) {
+export function CinematicFinale({ onEpilogueStart, onLetterRead }: {
+  onEpilogueStart: () => void
+  onLetterRead: () => void
+}) {
   const [scene, setScene] = useState(0)
   const [done, setDone] = useState(false)
-  const [letterOpen, setLetterOpen] = useState(false)
   const [showEpilogue, setShowEpilogue] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [audioUnavailable, setAudioUnavailable] = useState(false)
@@ -33,9 +34,9 @@ export function CinematicFinale({ onLetterRead }: { onLetterRead: () => void }) 
     audioRef.current?.play().catch(() => setPlaying(false))
   }
 
-  const finishLetter = () => {
+  const openEpilogue = () => {
     playMusic()
-    onLetterRead()
+    onEpilogueStart()
     setShowEpilogue(true)
   }
 
@@ -44,7 +45,8 @@ export function CinematicFinale({ onLetterRead }: { onLetterRead: () => void }) 
       <audio
         ref={audioRef}
         src={loveStory.epilogue.music}
-        preload={letterOpen ? 'metadata' : 'none'}
+        preload={done ? 'metadata' : 'none'}
+        loop
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onEnded={() => setPlaying(false)}
@@ -54,6 +56,7 @@ export function CinematicFinale({ onLetterRead }: { onLetterRead: () => void }) 
         <FinaleEpilogue
           playing={playing}
           audioUnavailable={audioUnavailable}
+          onLetterRead={onLetterRead}
           onToggleMusic={() => {
             if (audioRef.current?.paused) playMusic()
             else audioRef.current?.pause()
@@ -98,7 +101,7 @@ export function CinematicFinale({ onLetterRead }: { onLetterRead: () => void }) 
                   </div>
                   <div className="finale-signature">Котик ♡ Любимый</div>
                   <div className="scene-actions">
-                    <button className="romantic-button" onClick={() => setLetterOpen(true)}><Mail size={16} /> Прочитать моё письмо</button>
+                    <button className="romantic-button" onClick={openEpilogue}><Mail size={16} /> Прочитать моё письмо</button>
                   </div>
                 </>
               )}
@@ -106,14 +109,6 @@ export function CinematicFinale({ onLetterRead }: { onLetterRead: () => void }) 
           </SceneWipe>
         </section>
       )}
-      <LoveLetterModal
-        open={letterOpen}
-        title={loveStory.letter.title}
-        body={loveStory.letter.body}
-        readHint="В финале тихо заиграет музыка."
-        onClose={() => setLetterOpen(false)}
-        onRead={finishLetter}
-      />
     </>
   )
 }
