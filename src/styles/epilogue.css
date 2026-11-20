@@ -1,0 +1,144 @@
+.finale-epilogue {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 7rem max(1rem, env(safe-area-inset-right)) 3rem max(1rem, env(safe-area-inset-left));
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 28% 45%, #263348 0%, transparent 51%),
+    radial-gradient(ellipse at 84% 65%, #20192c 0%, transparent 43%),
+    #0b111e;
+}
+
+.finale-epilogue::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: '';
+  opacity: .49;
+  background-image:
+    radial-gradient(circle, #f9dcb6 0 1px, transparent 1.5px),
+    radial-gradient(circle, #a1adc5 0 .6px, transparent 1.1px);
+  background-position: 9% 13%, 22% 20%;
+  background-size: 149px 115px, 71px 87px;
+  mask-image: radial-gradient(ellipse at 30% 46%, #000, transparent 76%);
+}
+
+.finale-epilogue__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 5rem);
+  width: min(100%, 65rem);
+}
+
+.finale-epilogue__frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-width: 27rem;
+  aspect-ratio: 360 / 424;
+  margin-inline: auto;
+}
+
+.finale-epilogue__frame img {
+  display: block;
+  width: 68%;
+  height: auto;
+  border-radius: 46% 46% .55rem .55rem / 25% 25% .55rem .55rem;
+  border: 1px solid rgba(255, 229, 196, .6);
+  box-shadow: 0 1rem 3.5rem rgba(3, 8, 18, .58), 0 0 2.4rem rgba(140, 172, 212, .24);
+  animation: epilogue-photo 1.45s .14s var(--ease-film) both;
+}
+
+.finale-epilogue__constellation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 .33rem rgba(255, 221, 172, .47));
+  pointer-events: none;
+}
+
+.finale-epilogue__constellation polyline {
+  fill: none;
+  stroke: rgba(255, 224, 184, .62);
+  stroke-width: .9;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  animation: epilogue-connect 1.65s .35s var(--ease-film) both;
+}
+
+.finale-epilogue__constellation circle {
+  fill: #ffe5c1;
+  animation: epilogue-rise .75s var(--ease-film) both;
+}
+
+.finale-epilogue__copy { animation: epilogue-rise 1.25s 1.05s var(--ease-film) both; }
+.finale-epilogue__copy h2 {
+  margin: 0;
+  color: #fff5e9;
+  font: 500 clamp(2.4rem, 5.65vw, 5.25rem)/1.07 'Playfair Display', Georgia, serif;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+.finale-epilogue__copy h2:focus { outline: none; }
+
+.finale-epilogue__copy p {
+  margin: .85rem 0 0;
+  color: #f3cdb4;
+  font: italic clamp(1.06rem, 2.35vw, 1.52rem)/1.2 'Playfair Display', Georgia, serif;
+}
+
+.finale-epilogue__music {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  margin-top: 1.3rem;
+  padding: .4rem .9rem;
+  border: 1px solid rgba(244, 209, 173, .37);
+  border-radius: var(--radius-pill);
+  background: rgba(11, 17, 30, .64);
+  color: #f8ded0;
+  font-size: .92rem;
+}
+
+.finale-epilogue__music:hover { border-color: var(--candle); }
+.finale-epilogue__copy .finale-epilogue__audio-status { margin-top: 1.3rem; font: inherit; }
+.letter-music-hint { margin: 1.3rem 0 -.8rem; color: #634858; text-align: center; font-size: .91rem; }
+
+@keyframes epilogue-photo {
+  from { opacity: 0; transform: scale(.975); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes epilogue-connect {
+  from { stroke-dashoffset: 1; opacity: 0; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes epilogue-rise {
+  from { opacity: 0; transform: translateY(.35rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 740px) {
+  .finale-epilogue { padding-top: 8.6rem; }
+  .finale-epilogue__inner { grid-template-columns: 1fr; gap: .85rem; text-align: center; }
+  .finale-epilogue__frame { width: min(81vw, 19rem); }
+  .finale-epilogue__copy h2 { font-size: clamp(2.15rem, 8.6vw, 3.6rem); }
+  .finale-epilogue__copy p { margin-top: .65rem; }
+  .finale-epilogue__music { margin-top: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finale-epilogue__frame img,
+  .finale-epilogue__constellation polyline,
+  .finale-epilogue__constellation circle,
+  .finale-epilogue__copy { animation: none; }
+}
