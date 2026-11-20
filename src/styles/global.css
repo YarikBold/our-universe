@@ -61,15 +61,16 @@ button { touch-action: manipulation; }
 .couple-avatar__halo { position: absolute; inset: -.55rem; border-radius: 50%; background: conic-gradient(from 140deg, var(--candle), var(--orchid), var(--sage), var(--candle)); filter: blur(.15px); animation: portrait-orbit 12s linear infinite; }
 .couple-avatar__halo::after { content: ''; position: absolute; inset: .17rem; border-radius: inherit; background: var(--ink); }
 .couple-avatar__image { position: absolute; inset: .16rem; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(251,245,237,.8); border-radius: 50%; background: radial-gradient(circle at 50% 35%, #49324f, #151020); box-shadow: 0 0 3.5rem rgba(216,154,184,.28); }
-.couple-avatar__image img { width: 100%; height: 100%; object-fit: cover; }
+.couple-avatar__image img { width: 100%; height: 100%; object-fit: cover; object-position: 90% center; }
 .couple-avatar__placeholder { color: var(--orchid-bright); font-size: clamp(3rem, 8vw, 5rem); text-shadow: 0 0 1.7rem rgba(216,154,184,.8); }
 .couple-avatar__sparkle { position: absolute; z-index: 2; color: var(--candle); text-shadow: 0 0 .6rem currentColor; }
 .couple-avatar__sparkle--one { top: -1rem; right: 10%; }
 .couple-avatar__sparkle--two { bottom: 5%; left: 0; font-size: 1.6rem; }
-.couple-avatar-modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 1.2rem; background: rgba(8,9,20,.9); backdrop-filter: blur(18px); }
-.couple-avatar-modal__frame { width: min(90vw, 34rem); aspect-ratio: 1; display: grid; place-items: center; overflow: hidden; border: 1px solid var(--candle); border-radius: .5rem; background: var(--plum); box-shadow: var(--shadow-deep); }
-.couple-avatar-modal__frame img { width: 100%; height: 100%; object-fit: contain; }
-.couple-avatar-modal__close { position: fixed; top: max(1rem, env(safe-area-inset-top)); right: max(1rem, env(safe-area-inset-right)); display: grid; place-items: center; width: 2.8rem; height: 2.8rem; border: 1px solid var(--line); border-radius: 50%; color: var(--paper); background: rgba(255,255,255,.08); font-size: 1.5rem; }
+.photo-dialog { overflow: visible; max-width: calc(100% - 2rem); max-height: calc(100% - 2rem); padding: 0; border: 0; color: var(--paper); background: transparent; }
+.photo-dialog::backdrop { background: rgba(8,9,20,.93); }
+.photo-dialog__frame { display: grid; justify-items: end; gap: .65rem; }
+.photo-dialog__frame img { display: block; width: auto; height: auto; max-width: min(calc(100vw - 2rem), 58rem); max-height: min(78svh, calc(100svh - 6rem)); border: 1px solid var(--line); border-radius: .5rem; box-shadow: var(--shadow-deep); }
+.photo-dialog__close { display: grid; place-items: center; width: 2.8rem; height: 2.8rem; border: 1px solid var(--line); border-radius: 50%; color: var(--paper); background: var(--plum); font-size: 1.5rem; line-height: 1; }
 @keyframes portrait-orbit { to { transform: rotate(360deg); } }
 
 /* Chapter II: editorial archive */
@@ -87,8 +88,8 @@ button { touch-action: manipulation; }
 .memory-card:nth-child(3n) { --tilt: -2deg; }
 .memory-card:hover, .memory-card.is-active { transform: translateY(-.55rem) rotate(0); box-shadow: 0 1.8rem 3rem rgba(52,39,55,.25); }
 .memory-card::after { content: ''; position: absolute; left: 1rem; top: -.55rem; width: 3.5rem; height: 1.3rem; background: rgba(216,154,184,.55); transform: rotate(-4deg); opacity: .8; }
-.memory-photo { aspect-ratio: 1 / 1.18; display: grid; place-items: center; overflow: hidden; color: #806b79; background: linear-gradient(145deg, #dfc9cf, #d7d9c8); }
-.memory-photo img { width: 100%; height: 100%; object-fit: cover; }
+.memory-photo { position: relative; aspect-ratio: 1 / 1.18; display: grid; place-items: center; overflow: hidden; color: #806b79; background: linear-gradient(145deg, #dfc9cf, #d7d9c8); }
+.memory-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .memory-placeholder { font: italic 1.5rem 'Playfair Display', serif; text-align: center; }
 .memory-date { margin-top: .75rem; color: #9a6e80; font: .62rem 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
 .memory-title { margin: .3rem 0; font: 600 1.25rem/1.05 'Playfair Display', serif; }
@@ -209,6 +210,10 @@ button { touch-action: manipulation; }
 /* Chapter V: dusk and sakura */
 .finale-scene { display: flex; align-items: flex-end; padding: 8rem 1rem 5rem; background: linear-gradient(180deg, #080a18 0%, #10192b 45%, #4b3c4d 74%, #bf8794 100%); }
 .finale-scene::before { content: ''; position: absolute; inset: 0; z-index: -2; background: radial-gradient(ellipse at 50% 37%, rgba(255,233,197,.34), transparent 25%), radial-gradient(ellipse at 17% 15%, rgba(216,154,184,.18), transparent 25%); }
+.finale-photo { position: absolute; inset: 0; z-index: -2; pointer-events: none; }
+.finale-photo img { width: 100%; height: 100%; object-fit: cover; animation: finale-photo-enter .85s ease-out both; }
+.finale-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,9,20,.42), rgba(8,9,20,.03) 34%, rgba(8,9,20,.78) 76%, #080914); }
+@keyframes finale-photo-enter { from { opacity: 0; transform: scale(1.035); } to { opacity: 1; transform: scale(1); } }
 .finale-scene::after { content: ''; position: absolute; inset: auto 0 0; height: 42%; z-index: -1; background: linear-gradient(transparent, rgba(13,11,20,.8)), clip-path polygon(0 50%, 9% 36%, 16% 48%, 27% 18%, 38% 44%, 51% 25%, 64% 45%, 77% 18%, 88% 43%, 100% 28%, 100% 100%, 0 100%); }
 .finale-content { width: min(100%, 62rem); margin: 0 auto; text-align: center; }
 .finale-line { max-width: 48rem; min-height: 7rem; margin: 2rem auto 1.5rem; font-size: clamp(2rem, 5vw, 4.6rem); line-height: 1.03; }

@@ -3,16 +3,20 @@ export type Memory = {
   text: string
   date?: string
   image?: string
+  imageAlt?: string
+  imagePosition?: string
+  imageFit?: 'contain' | 'cover'
 }
 
 const assetBase = import.meta.env.BASE_URL
+const photo = (name: string) => `${assetBase}images/${name}.jpg`
 
 export const loveStory = {
   siteTitle: 'Наша маленькая вселенная',
   startDate: '2025-11-20T20:11:00+03:00',
   girlfriendName: 'Котик',
   boyfriendName: 'Любимый',
-  couplePhoto: `${assetBase}images/us.jpg`,
+  couplePhoto: photo('us'),
   musicPath: `${assetBase}audio/our-song.mp3`,
   chapters: {
     storyTitle: 'У каждой истории есть начало. У нашей — 20 ноября 2025 года.',
@@ -38,11 +42,31 @@ export const loveStory = {
     ].map(([title, text]) => ({ title, text })),
   },
   memories: [
-    { title: '20.11.2025', text: 'День, когда появилось наше “мы”. Тогда я ещё не знал, сколько счастья впереди. Но теперь точно знаю, что эта дата всегда будет для меня особенной.', date: '20 ноября 2025' },
-    { title: 'Наши разговоры', text: 'Мне нравится, что с тобой можно говорить обо всём. Серьёзно, смешно, глупо — неважно. Главное, что рядом именно ты.' },
-    { title: 'Маленькие моменты', text: 'Самые ценные воспоминания не обязательно должны быть грандиозными. Иногда достаточно одного взгляда, улыбки или сообщения от тебя.' },
-    { title: 'Моё любимое счастье', text: 'Счастье для меня — знать, что в этом огромном мире у меня есть ты. Мой самый родной Котик.' },
-    { title: 'Всё ещё впереди', text: 'Это только первые страницы нашей истории. И мне очень хочется написать вместе с тобой ещё тысячи.' },
+    {
+      title: '20.11.2025', date: '20 ноября 2025',
+      text: 'День, когда появилось наше “мы”. Тогда я ещё не знал, сколько счастья впереди. Но теперь точно знаю, что эта дата всегда будет для меня особенной.',
+      image: photo('memories/sunset'), imageAlt: 'Поцелуй на берегу на закате', imagePosition: '78% center',
+    },
+    {
+      title: 'Наши разговоры',
+      text: 'Мне нравится, что с тобой можно говорить обо всём. Серьёзно, смешно, глупо — неважно. Главное, что рядом именно ты.',
+      image: photo('memories/selfie'), imageAlt: 'Мы вдвоём на селфи', imagePosition: 'center 28%',
+    },
+    {
+      title: 'Маленькие моменты',
+      text: 'Самые ценные воспоминания не обязательно должны быть грандиозными. Иногда достаточно одного взгляда, улыбки или сообщения от тебя.',
+      image: photo('memories/ferris-wheel'), imageAlt: 'Объятие в кабине колеса обозрения',
+    },
+    {
+      title: 'Моё любимое счастье',
+      text: 'Счастье для меня — знать, что в этом огромном мире у меня есть ты. Мой самый родной Котик.',
+      image: photo('memories/illustration'), imageAlt: 'Рисунок пары, держащейся за руки', imageFit: 'contain',
+    },
+    {
+      title: 'Всё ещё впереди',
+      text: 'Это только первые страницы нашей истории. И мне очень хочется написать вместе с тобой ещё тысячи.',
+      image: photo('memories/night-shore'), imageAlt: 'Мы стоим рядом на берегу под звёздами',
+    },
   ] as Memory[],
   gameMessages: [
     'Ты делаешь мои дни счастливее.',
@@ -64,6 +88,12 @@ export const loveStory = {
     'А потом появился день, который всё изменил.',
     '20 ноября 2025 года. День, когда началась наша история.',
     'И если меня спросят, что я хочу сохранить как можно дольше, я отвечу: нас.',
+  ],
+  finalePhotos: [
+    { src: photo('finale/moon'), position: '72% 48%' },
+    { src: photo('finale/moonlit-silhouette'), position: '38% 35%' },
+    { src: photo('finale/under-the-stars'), position: '50% 38%' },
+    { src: photo('finale/night-sky'), position: '50% 55%' },
   ],
   letter: {
     title: 'Моему любимому Котику',
